@@ -2,9 +2,23 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
 const CategorySearch = () => {
+    const [categoryList, setCataegoryList] = useState([])
+
+    useEffect(() => {
+        getcotegoryList()
+    }, [])
+    
+    const getCategoryList = () => 
+    {
+        GlobalApi.getcotegoryList().then(resp => {
+            console.log(resp.data.data);
+            setCataegoryList(resp.data.data);
+        })
+    }
     return (
         <div className='mb-10 items-center px-5 flex flex-col gap-2'>
             {/* tracking-wide spacing between words */}
@@ -21,7 +35,7 @@ const CategorySearch = () => {
             <div className='grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-6'>
 
                 {categoryList.length > 0 ? categoryList.map((item, index) => index < 6 && (
-                    <div key={index} className='flex flex-col text-center
+                    <Link href={'/search/'+item.name} key={index} className='flex flex-col text-center
                     item-center p-5 bg-blue-50 m-2 rounded-lg cursor-pointer
                     gap-2 hover:scale-105 transition-all ease-in-out'>
                         <Image src={item.attributes?.Icon?.data.attributes}
@@ -30,7 +44,7 @@ const CategorySearch = () => {
                             width={40}
                         />
                         <label className='text-blue-600 text-sm' >{item.attributes?.name}</label>
-                    </div>
+                    </Link>
 
                 ))
                     :

@@ -5,7 +5,7 @@ import Hero from "./_components/Hero";
 import CategorySearch from "./_components/CategorySearch";
 import DoctorList from "./_components/DoctorList";
 import { useEffect, useState } from "react";
-// 2:12
+// 2:30
 export default function Home() {
 
   const [doctorList,setDoctorList] = useState([]);
