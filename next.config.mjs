@@ -2,7 +2,8 @@
 const nextConfig = {
     reactStrictMode: false,
     images:{
-        domains:['res.cloudinary.com']
+        // lh3 config add karna padega
+        domains:['res.cloudinary.com','lh2.googleusercontent.com']
     }
 };
 
