@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { GraduationCap, MapPin } from "lucide-react";
 import Image from "next/image";
+import BookAppointment from "./BookAppointment";
 
 const DoctorDetail = ({ doctor }) => {
 
@@ -67,7 +68,7 @@ const DoctorDetail = ({ doctor }) => {
                             />
                         })}
                     </div>
-                    <Button className="mt-3 rounded-full">Book Appointment</Button>
+                    <BookAppointment/>
                 </div>
 
                 {/* About Doctor  */}

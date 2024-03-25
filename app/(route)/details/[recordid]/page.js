@@ -2,12 +2,13 @@
 import GlobalApi from '@/app/_utils/GlobalApi'
 import { useEffect, useState } from 'react'
 import DoctorDetail from '../_components/DoctorDetail';
+import DoctorSuggestionList from '../_components/DoctorSuggestionList';
 
 
 const Details = (params) => {
     const [doctor, setDoctor] = useState();
     useEffect(() => {
-        // 3.12
+        // 3.31
         getDoctorbyId();
     }, [])
 
@@ -28,7 +29,7 @@ const Details = (params) => {
                 </div>
                 <div>
                     {/* doctor suggestion  */}
-
+                    <DoctorSuggestionList/>
                 </div>
             </div>
         </div>
