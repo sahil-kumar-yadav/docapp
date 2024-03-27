@@ -20,4 +20,8 @@ const getDoctorById = (id)=>axiosClient.get('/doctors'+id+'?populate=*')
 
 const bookAppointment = ()=>axiosClient.post('/appointments',data);
 
-export {getCategory , getDoctorList,getDoctorByCategory,getDoctorById,bookAppointment}
+// 4.18
+
+const sendEmail = (data) =>axios.post('/api/sendEmail',data);
+
+export {getCategory , getDoctorList,getDoctorByCategory,getDoctorById,bookAppointment,sendEmail}

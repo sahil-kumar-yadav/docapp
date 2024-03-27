@@ -72,6 +72,9 @@ const BookAppointment = ({doctor}) => {
 
     GlobalApi.BookAppointment(data).then(resp=>{
         console.log(resp);
+        GlobalApi.sendEmail(data).then(resp=>{
+            console.log(resp)
+        })
         toast("Booking confirmation will send you on mail")
     })
 
