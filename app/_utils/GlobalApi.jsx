@@ -18,4 +18,6 @@ const getDoctorByCategory = (category)=> axiosClient.get('/doctors?filters[categ
 
 const getDoctorById = (id)=>axiosClient.get('/doctors'+id+'?populate=*')
 
-export {getCategory , getDoctorList,getDoctorByCategory,getDoctorById}
+const bookAppointment = ()=>axiosClient.post('/appointments',data);
+
+export {getCategory , getDoctorList,getDoctorByCategory,getDoctorById,bookAppointment}

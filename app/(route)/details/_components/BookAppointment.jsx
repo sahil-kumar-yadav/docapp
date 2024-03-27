@@ -14,15 +14,19 @@ import { Calendar } from "@/components/ui/calendar"
 import { useEffect, useState } from "react";
 import { CalendarDays, Clock } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
 
 // 3.21
 
-// 3.53
-const BookAppointment = () => {
+// 4.05
+const BookAppointment = ({doctor}) => {
 
     const [date, setDate] = useState(new Date());
     const [timeSlot, setTimeSlot] = useState();
     const [selectedTimeSlot, setselectedTimeSlot] = useState();
+    const [note,setNote] = useState();
+    const {user} = useKindeBrowserClient();
     const isPastDay = (day) => {
         return day < new Date();
     }
@@ -52,6 +56,25 @@ const BookAppointment = () => {
         }
         setTimeSlot(timeList);
     }
+
+    const saveBooking=()=>{
+        const data={
+            data:{
+                UserName:user.given_name+" "+user.family_name,
+                Email:user.email,
+                Time:selectedTimeSlot,
+                Date:date,
+                doctor:doctor.id,
+                Note:note
+            }
+        }
+    }
+
+    GlobalApi.BookAppointment(data).then(resp=>{
+        console.log(resp);
+        toast("Booking confirmation will send you on mail")
+    })
+
     return (
         <Dialog>
             <DialogTrigger>
@@ -111,10 +134,12 @@ const BookAppointment = () => {
                         <>
                         <Button type="button"
                         className="text-red-500 border-red-500 "
-                        variant="secondary">
+                        variant="outline">
                             Close
                         </Button>
-                        <Button type="button" variant="secondary" disabled={!(date&&selectedTimeSlot)}>
+                        <Button type="button" variant="secondary" disabled={!(date&&selectedTimeSlot)}
+                        onClick={()=>saveBooking()}
+                        >
                             Submit
                         </Button>
                         </>

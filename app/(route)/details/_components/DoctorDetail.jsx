@@ -68,7 +68,7 @@ const DoctorDetail = ({ doctor }) => {
                             />
                         })}
                     </div>
-                    <BookAppointment/>
+                    <BookAppointment doctor={doctor}/>
                 </div>
 
                 {/* About Doctor  */}
