@@ -1,31 +1,38 @@
-const { default: axios } = require("axios")
+const { default: axios } = require("axios");
 
-const API_KEY = process.env.KEY 
 
+const API_KEY = process.env.NEXT_PUBLIC_STRAPI_API_KEY;
 
 const axiosClient = axios.create({
-    baseURL:'http://localhost:1337/api',
-    headers:{
-        'Authorization':'Bearer ${API_KEY}'
+    baseURL: 'http://localhost:1337/api',
+    // baseURL: 'https://appointment-booking-admin.onrender.com/api',
+    headers: {
+        'Authorization': `Bearer ${API_KEY}`
     }
 })
 
-const getCategory = ()=> axiosClient.get('/categories?')
+const getCategory = () => axiosClient.get('/categories?populate=*');
 
-const getDoctorList = ()=> axiosClient.get('/doctors?populate=*')
+const getDoctorList = () => axiosClient.get('/doctors?populate=*')
 
-const getDoctorByCategory = (category)=> axiosClient.get('/doctors?filters[categories][Name][$in]='+"&populate=*")
+const getDoctorByCategory = (category) => axiosClient.get('/doctors?filters[categories][Name][$in]=' + category + "&populate=*")
 
+const getDoctorById = (id) => axiosClient.get('/doctors/' + id + "?populate=*")
 
-// 4.31
-const getDoctorById = (id)=>axiosClient.get('/doctors'+id+'?populate=*')
+const bookAppointment = (data) => axiosClient.post('/appointments', data);
 
-const bookAppointment = ()=>axiosClient.post('/appointments',data);
+const getUserBookingList = (userEmail) => axiosClient.get("/appointments?[filters][Email][$eq]=" + userEmail + "&populate[doctor][populate][image][populate][0]=url&populate=*")
 
-// 4.18
+const deleteBooking = (id) => axiosClient.delete('/appointments/' + id)
 
-const sendEmail = (data) =>axios.post('/api/sendEmail',data);
-
-const getUserBookingList=(userEmail)=>axios.get("/appointments?[filters][Email][seq]="+userEmail+"&populate*")
-
-export {getCategory , getDoctorList,getDoctorByCategory,getDoctorById,bookAppointment,sendEmail,getUserBookingList}
+const sendEmail = (data) => axios.post('/api/sendEmail', data);
+export default {
+    getCategory,
+    getDoctorList,
+    getDoctorByCategory,
+    getDoctorById,
+    bookAppointment,
+    getUserBookingList,
+    deleteBooking,
+    sendEmail
+}
