@@ -1,57 +1,61 @@
 
 //4.29
 "use client"
+import React, { useEffect, useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import BookingList from './_components/BookingList'
+import GlobalApi from '@/app/_utils/GlobalApi'
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 
-import { Tabs,TabsContent,TabsList,TabsTrigger } from "@/components/ui/tabs"
-import BookingList from "./_components/BookingList";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { useEffect, useState } from "react";
 
+const MyBooking = () => {
 
-const MyBooking = () =>
-{
-
-    const {user} = useKindeBrowserClient();
-    const [bookingList,setbookingList] = useState([]);
-    useEffect(()=>{
-        user&&useKindeBrowserClient();
-    },[user])
-
-    const getUserBookingList=() =>
-    {
-        GlobalApi.getUserBookingList(user?.email).then(resp=>
-        {
-           console.log(resp.data.data)
-           setbookingList(resp.data.data);
+    const { user } = useKindeBrowserClient();
+    const [bookingList, setBookingList] = useState([]);
+    useEffect(() => {
+        user && getUserBookingList();
+    }, [user])
+    const getUserBookingList = () => {
+        GlobalApi.getUserBookingList(user?.email).then(resp => {
+            console.log(resp.data.data)
+            setBookingList(resp.data.data);
         })
     }
 
-    //used to filter User Booking
-    
-    const filterUserBooking=(type)=>
-    {
-        const result = bookingList.filter(item=>
-            type=='upcoming'? new Date(item.attribute.Date) >= new Date():
-            new Date(item.attribute.Date) <= new Date()
-            )
-            console.log(result);
+    /**
+     * Used to Filter User Booking
+     * @param {} type 
+     * @returns 
+     */
+    const filterUserBooking = (type) => {
+        const result = bookingList.filter(item =>
+            type == 'upcoming' ? new Date(item.attributes.Date) >= new Date()
+                : new Date(item.attributes.Date) <= new Date()
+        )
+        console.log(result)
         return result;
     }
-
     return (
-        <div className="px-4 md:px-10 mt-10">
-            <h2 className="font-bold text-2xl">My Booking</h2>
+        <div className='px-4 sm:px-10 mt-10'>
+            <h2 className='font-bold text-2xl'>My Booking</h2>
             <Tabs defaultValue="upcoming" className="w-full mt-5">
-                <TabsList className='w-full justify-start'>
+                <TabsList className="w-full justify-start">
                     <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
                     <TabsTrigger value="expired">Expired</TabsTrigger>
                 </TabsList>
                 <TabsContent value="upcoming">
-                    <BookingList bookingList={filterUserBooking('upcoming')} />
-                    </TabsContent>
+                    <BookingList
+                        bookingList={filterUserBooking('upcoming')}
+                        updateRecord={() => getUserBookingList()}
+                        expired={false}
+                    />
+                </TabsContent>
                 <TabsContent value="expired">
-                    <BookingList bookingList={filterUserBooking('expired')} />
-                    </TabsContent>
+                    <BookingList bookingList={filterUserBooking('expired')}
+                        updateRecord={() => getUserBookingList()}
+                        expired={true}
+                    />
+                </TabsContent>
             </Tabs>
 
         </div>

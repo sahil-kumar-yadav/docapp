@@ -10,23 +10,23 @@ import { useEffect, useState } from "react";
 
 // 3.00
 
-const Search = ({params}) => {
-    const [doctorList,setDoctorList] = useState([]);
-    useEffect(()=>{
-        console.log(params.cname)
+const Search = ({ params }) => {
+    const [doctorList, setDoctorList] = useState([]);
+    useEffect(() => {
+        console.log(params.cname);
         getDoctors();
-    })
-    const getDoctors=()=>{
-        GlobalApi.getDoctorByCategory(params.cname)
-        .then(resp = ()=>{
-            console.log(resp);
-            setDoctorList(resp.data.data)
+    }, [])
+
+    const getDoctors = () => {
+        GlobalApi.getDoctorByCategory(params.cname).then(resp => {
+            setDoctorList(resp.data.data);
         })
     }
-
     return (
-        <div className="mt-5">
-            <DoctorList heading={params.cname} doctorList={doctorList} />
+        <div className='mt-5'>
+            <DoctorList heading={params.cname}
+                doctorList={doctorList}
+            />
         </div>
     );
 }

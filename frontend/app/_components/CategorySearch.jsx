@@ -4,17 +4,18 @@ import { Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import GlobalApi from '../_utils/GlobalApi'
 
 const CategorySearch = () => {
     const [categoryList, setCataegoryList] = useState([])
 
     useEffect(() => {
-        getcotegoryList()
+        getCategoryList()
     }, [])
     
     const getCategoryList = () => 
     {
-        GlobalApi.getcotegoryList().then(resp => {
+        GlobalApi.getCategory().then(resp => {
             console.log(resp.data.data);
             setCataegoryList(resp.data.data);
         })

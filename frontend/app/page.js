@@ -5,6 +5,7 @@ import Hero from "./_components/Hero";
 import CategorySearch from "./_components/CategorySearch";
 import DoctorList from "./_components/DoctorList";
 import { useEffect, useState } from "react";
+import GlobalApi from "./_utils/GlobalApi";
 // 2:30
 export default function Home() {
 

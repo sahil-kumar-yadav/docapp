@@ -13,6 +13,12 @@
   "attributes": {
     "Name": {
       "type": "string"
+    },
+    "appointments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::appointment.appointment",
+      "mappedBy": "hospital"
     }
   }
 }
