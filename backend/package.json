@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@strapi/provider-upload-cloudinary": "^4.25.5"
-  }
-}
